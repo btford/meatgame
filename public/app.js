@@ -9,7 +9,7 @@ window.requestAnimFrame = (function(){
 })();
 
 // connect
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect();
 var dirty = false;
 var data = {x: 0, y: 0};
 
