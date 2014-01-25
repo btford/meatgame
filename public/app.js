@@ -13,6 +13,8 @@ var socket = io.connect();
 var dirty = false;
 var data = {x: 0, y: 0};
 
+window.socket = socket;
+
 var context = a.getContext('2d');
 context.fillStyle = '#333';
 
@@ -22,7 +24,6 @@ socket.on('message', function (newData) {
     setPath(datum.key, datum.value, data);
   });
 });
-
 
 function setPath (path, value, obj) {
   path = path.split('.');
@@ -38,7 +39,7 @@ function setPath (path, value, obj) {
 }
 
 b.addEventListener('click', function () {
-  socket.emit('message');
+  socket.emit('button');
 });
 
 function render () {

@@ -15,9 +15,21 @@ model.x = 1;
 model.y = 1;
 
 io.sockets.on('connection', function (socket) {
-  socket.on('message', function () {
+  socket.on('button', function () {
     model.x += 1;
     model.y += 1;
+  });
+  socket.on('left', function () {
+    if (model.x > 1) model.x -= 1;
+  });
+  socket.on('right', function () {
+    model.x += 1;
+  });
+  socket.on('down', function () {
+    model.y += 1;
+  });
+  socket.on('up', function () {
+    if (model.y > 1) model.y -= 1;
   });
 });
 
