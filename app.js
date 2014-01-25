@@ -21,6 +21,7 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
+var resolvePath = require('./lib/resolve-path');
 
 function tick () {
   var changed = model.diff();
@@ -36,19 +37,6 @@ function tick () {
   setTimeout(tick, 16);
 }
 
-// TODO(btford): move to model.js
-function resolvePath (path, obj) {
-  path = path.split('.');
-  var segment;
-  while (path.length && (segment = path.shift())) {
-    if (obj[segment]) {
-      obj = obj[segment];
-    } else {
-      return;
-    }
-  }
-  return obj;
-}
 
 server.listen(3000);
 
