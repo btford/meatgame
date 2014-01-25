@@ -18,8 +18,24 @@ context.fillStyle = '#333';
 
 socket.on('message', function (newData) {
   dirty = true;
-  data = newData;
+  newData.forEach(function (datum) {
+    setPath(datum.key, datum.value, data);
+  });
 });
+
+
+function setPath (path, value, obj) {
+  path = path.split('.');
+  var segment;
+  while (path.length > 1 && (segment = path.shift())) {
+    if (obj[segment]) {
+      obj = obj[segment] || (obj[segment] = {});
+    } else {
+      return;
+    }
+  }
+  obj[path[0]] = value;
+}
 
 b.addEventListener('click', function () {
   socket.emit('message');
