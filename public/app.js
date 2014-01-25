@@ -21,6 +21,10 @@ socket.on('message', function (newData) {
   data = newData;
 });
 
+b.addEventListener('click', function () {
+  socket.emit('message');
+});
+
 function render () {
   if (dirty) {
     dirty = false;
