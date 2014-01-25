@@ -33,11 +33,10 @@ io.sockets.on('connection', function (socket) {
   socket.on('up', function () {
     if (model.players[id].y > 1) model.players[id].y -= 1;
   });
-  /*
+
   socket.on('disconnect', function () {
     delete model.players[id];
   });
-  */
 });
 
 var resolvePath = require('./lib/resolve-path');

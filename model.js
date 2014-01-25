@@ -7,7 +7,7 @@ var createProxyHandler = function (obj) {
       return Object.getOwnPropertyDescriptor(obj);
     },
     getPropertyDescriptor: function () {
-      return Object.getPropertyDescriptor(obj);
+      return Object.getOwnPropertyDescriptor(obj);
     },
     getOwnPropertyNames: function () {
       return Object.getOwnPropertyNames(obj);
