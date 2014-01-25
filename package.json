@@ -4,7 +4,8 @@
   "description": "meatspace game for the global game jam",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --harmony app.js"
   },
   "author": "meatspac.es",
   "license": "MIT",
@@ -13,5 +14,8 @@
     "koa-common": "~1.1.1",
     "socket.io": "~0.9.16",
     "koa-route": "~1.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "~1.0.13"
   }
 }
