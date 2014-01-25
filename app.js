@@ -11,20 +11,29 @@ var server = require('http').Server(app.callback()),
 
 var model = require('./model')();
 
+model.x = 1;
+model.y = 1;
+
 io.sockets.on('connection', function (socket) {
   socket.on('message', function () {
     model.x += 1;
-    console.log(model.diff());
+    model.y += 1;
   });
 });
 
 
 function tick () {
-  io.sockets.emit('message', {
-    x: 1,
-    y: 2
-  });
+  var changed = model.diff();
+
+  if (changed.length) {
+    io.sockets.emit('message', changed.reduce(function (obj, path) {
+      obj[path] = model[path];
+      return obj;
+    }, {}));
+  }
   setTimeout(tick, 16);
 }
 
 server.listen(3000);
+
+tick();
