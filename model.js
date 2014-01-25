@@ -43,6 +43,9 @@ var createProxyHandler = function (obj) {
       if (name === '__diff') {
         return false;
       }
+      if (obj[name] === val) {
+        return false;
+      }
 
       if (typeof val === 'object') {
         val = createModel(val);
