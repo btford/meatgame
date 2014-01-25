@@ -1,3 +1,4 @@
+var resolvePath = require('./lib/resolve-path');
 
 var createProxyHandler = function (obj) {
 
@@ -12,7 +13,7 @@ var createProxyHandler = function (obj) {
       return Object.getOwnPropertyNames(obj);
     },
     getPropertyNames: function () {
-      return Object.getPropertyNames(obj);
+      return Object.getOwnPropertyNames(obj);
     },
     defineProperty: function (name, desc) {
       return Object.defineProperty(obj, name, desc);
@@ -87,11 +88,17 @@ var createModel = module.exports = function (obj) {
     }
   });
 
-  obj.diff = function () {
+  obj._diff = function () {
     var dirt = Object.keys(this).
+      filter(function (key) {
+        return key[0] !== '_';
+      }).
       map(function (key) {
-        if (typeof obj[key] === 'object') {
-          return obj[key].diff().map(function (subKey) {
+        if (typeof obj[key] === 'object' && obj[key] !== null) {
+          if (!obj[key].diff) {
+            console.log(key, obj)
+          }
+          return obj[key]._diff().map(function (subKey) {
             return key + '.' + subKey;
           });
         }
@@ -105,6 +112,16 @@ var createModel = module.exports = function (obj) {
     obj.__dirty = {};
 
     return dirt;
+  };
+
+  obj.diff = function () {
+    return obj._diff().
+      map(function (path) {
+        return {
+          key: path,
+          value: resolvePath(path, obj)
+        };
+      });
   };
 
   return Proxy.create(createProxyHandler(obj));

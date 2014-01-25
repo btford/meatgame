@@ -1,15 +1,14 @@
-var koa = require('koa'),
-    app = koa(),
-    common = require('koa-common'),
-    route = require('koa-route');
+var koa     = require('koa'),
+    app     = koa(),
+    common  = require('koa-common'),
+    route   = require('koa-route');
 
 app.use(common.favicon());
 app.use(common.static(__dirname + '/public', {defer: true}));
 
-var server = require('http').Server(app.callback()),
-  io = require('socket.io').listen(server);
-
-var model = require('./model')();
+var server  = require('http').Server(app.callback()),
+    io      = require('socket.io').listen(server),
+    model   = require('./model')();
 
 model.players = {};
 
@@ -34,21 +33,18 @@ io.sockets.on('connection', function (socket) {
   socket.on('up', function () {
     if (model.players[id].y > 1) model.players[id].y -= 1;
   });
+  /*
+  socket.on('disconnect', function () {
+    delete model.players[id];
+  });
+  */
 });
 
 var resolvePath = require('./lib/resolve-path');
 
 function tick () {
   var changed = model.diff();
-
-  if (changed.length) {
-    io.sockets.emit('message', changed.map(function (path) {
-      return {
-        key: path,
-        value: resolvePath(path, model)
-      };
-    }));
-  }
+  changed.length && io.sockets.emit('message', changed);
   setTimeout(tick, 16);
 }
 
