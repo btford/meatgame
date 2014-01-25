@@ -37,6 +37,10 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     delete model.players[id];
   });
+
+  socket.on('enter', function (picture) {
+    model.players[id].picture = picture;
+  });
 });
 
 var resolvePath = require('./lib/resolve-path');
