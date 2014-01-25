@@ -34,10 +34,6 @@ function setPath (path, value, obj) {
   obj[path[0]] = value;
 }
 
-b.addEventListener('click', function () {
-  socket.emit('button');
-});
-
 function render () {
   if (dirty) {
     dirty = false;
