@@ -26,12 +26,28 @@ function tick () {
   var changed = model.diff();
 
   if (changed.length) {
-    io.sockets.emit('message', changed.reduce(function (obj, path) {
-      obj[path] = model[path];
-      return obj;
-    }, {}));
+    io.sockets.emit('message', changed.map(function (path) {
+      return {
+        key: path,
+        value: resolvePath(path, model)
+      };
+    }));
   }
   setTimeout(tick, 16);
+}
+
+// TODO(btford): move to model.js
+function resolvePath (path, obj) {
+  path = path.split('.');
+  var segment;
+  while (path.length && (segment = path.shift())) {
+    if (obj[segment]) {
+      obj = obj[segment];
+    } else {
+      return;
+    }
+  }
+  return obj;
 }
 
 server.listen(3000);
