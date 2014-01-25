@@ -15,6 +15,7 @@ var keyState = window.keyState = {};
 window.addEventListener('keydown', function (ev) {
   var name = keysWeCareAbout[ev.keyCode.toString()];
   if (name) {
+    window.socket.emit(name);
     keyState[name] = true;
   }
 });
