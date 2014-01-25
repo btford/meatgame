@@ -16,8 +16,9 @@ model.players = {};
 io.sockets.on('connection', function (socket) {
   var id = socket.id;
 
-  model.players[id] = { x: 0, y: 0 };
-
+  model.players[id] = {};
+  model.players[id].x = 1;
+  model.players[id].y = 1;
   socket.on('left', function () {
     if (model.players[id].x > 1) model.players[id].x -= 1;
   });
