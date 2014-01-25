@@ -1,0 +1,17 @@
+{
+  "name": "meatgame",
+  "version": "0.0.0",
+  "description": "meatspace game for the global game jam",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "meatspac.es",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "~0.3.0",
+    "koa-common": "~1.1.1",
+    "socket.io": "~0.9.16",
+    "koa-route": "~1.0.2"
+  }
+}
