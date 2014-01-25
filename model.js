@@ -90,10 +90,12 @@ var createModel = module.exports = function (obj) {
   obj.diff = function () {
     var dirt = Object.keys(this).
       map(function (key) {
-        return typeof obj[key] === 'object' ?
-          obj[key].diff().map(function (subKey) {
+        if (typeof obj[key] === 'object') {
+          return obj[key].diff().map(function (subKey) {
             return key + '.' + subKey;
-          }) : [];
+          });
+        }
+        return [];
       }).
       reduce(function (a, b) {
         return a.concat(b);

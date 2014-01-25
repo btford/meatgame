@@ -11,25 +11,27 @@ var server = require('http').Server(app.callback()),
 
 var model = require('./model')();
 
-model.x = 1;
-model.y = 1;
+model.players = {};
 
 io.sockets.on('connection', function (socket) {
-  socket.on('button', function () {
-    model.x += 1;
-    model.y += 1;
-  });
+  var id = socket.id;
+
+  model.players[id] = { x: 0, y: 0 };
+
   socket.on('left', function () {
-    if (model.x > 1) model.x -= 1;
+    if (model.players[id].x > 1) model.players[id].x -= 1;
   });
+
   socket.on('right', function () {
-    model.x += 1;
+    model.players[id].x += 1;
   });
+
   socket.on('down', function () {
-    model.y += 1;
+    model.players[id].y += 1;
   });
+
   socket.on('up', function () {
-    if (model.y > 1) model.y -= 1;
+    if (model.players[id].y > 1) model.players[id].y -= 1;
   });
 });
 

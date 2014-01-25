@@ -11,7 +11,7 @@ window.requestAnimFrame = (function(){
 // connect
 var socket = io.connect();
 var dirty = false;
-var data = {x: 0, y: 0};
+var data = {players: {}};
 
 window.socket = socket;
 
@@ -29,11 +29,7 @@ function setPath (path, value, obj) {
   path = path.split('.');
   var segment;
   while (path.length > 1 && (segment = path.shift())) {
-    if (obj[segment]) {
-      obj = obj[segment] || (obj[segment] = {});
-    } else {
-      return;
-    }
+    obj = obj[segment] || (obj[segment] = {});
   }
   obj[path[0]] = value;
 }
@@ -46,7 +42,10 @@ function render () {
   if (dirty) {
     dirty = false;
     a.width = a.width;
-    context.fillRect(data.x, data.y, 50, 50);
+    var players = Object.keys(data.players).forEach(function (id) {
+      var player = data.players[id];
+      context.fillRect(player.x, player.y, 50, 50);
+    });
   }
   requestAnimationFrame(render);
 }
