@@ -16,6 +16,7 @@
     "koa-route": "~1.0.2"
   },
   "devDependencies": {
-    "nodemon": "~1.0.13"
+    "nodemon": "~1.0.13",
+    "bower": "~1.2.8"
   }
 }
