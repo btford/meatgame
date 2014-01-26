@@ -14,12 +14,12 @@ var dirtyPlayers = false;
 var data = {players: {}};
 
 var getScreenshot = function (callback, numFrames, interval, progressCallback) {
-  if (videoShooter) {                                                         
-    videoShooter.getShot(callback, numFrames, interval, progressCallback);    
-  } else {                                                                    
-    callback('');                                                             
-  }                                                                           
-}; 
+  if (videoShooter) {
+    videoShooter.getShot(callback, numFrames, interval, progressCallback);
+  } else {
+    callback('');
+  }
+};
 
 var gumHelper = GumHelper;
 gumHelper.startVideoStreaming(function callback(err, stream, videoElement) {
@@ -75,6 +75,9 @@ function renderPlayers () {
       if (!gifElements[id]) {
         gifElements[id] = makeImg();
       }
+      if (data.players[id].picture && gifElements[id].src !== data.players[id].picture) {
+        gifElements[id].src = data.players[id].picture;
+      }
 
       translateElement(gifElements[id], data.players[id].x, data.players[id].y);
     });
@@ -85,7 +88,6 @@ function renderPlayers () {
 
 function makeImg () {
   var img = document.createElement('img');
-  img.src = '/waggle-stack.gif';
   gifContainer.appendChild(img)
   return img;
 }
