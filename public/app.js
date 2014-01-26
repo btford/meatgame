@@ -10,7 +10,7 @@ window.requestAnimFrame = (function(){
 
 // connect
 var socket = io.connect();
-var dirty = false;
+var dirtyPlayers = false;
 var data = {players: {}};
 
 window.socket = socket;
@@ -19,7 +19,7 @@ var context = a.getContext('2d');
 context.fillStyle = '#333';
 
 socket.on('message', function (newData) {
-  dirty = true;
+  dirtyPlayers = true;
   newData.forEach(function (datum) {
     setPath(datum.key, datum.value, data);
   });
@@ -35,15 +35,42 @@ function setPath (path, value, obj) {
 }
 
 function render () {
-  if (dirty) {
-    dirty = false;
-    a.width = a.width;
+  renderPlayers();
+  // for canvases
+  //a.width = a.width;
+  requestAnimationFrame(render);
+}
+
+var gifContainer = document.querySelector('.gifs');
+var gifElements  = {};
+
+function renderPlayers () {
+  if (dirtyPlayers) {
+    dirtyPlayers = false;
     var players = Object.keys(data.players).forEach(function (id) {
       var player = data.players[id];
-      context.fillRect(player.x, player.y, 50, 50);
+
+      // if a player has been added since last render, we need to add a new img element
+      if (!gifElements[id]) {
+        gifElements[id] = makeImg();
+      }
+
+      translateElement(gifElements[id], data.players[id].x, data.players[id].y);
     });
+    // remove old images ?
+
   }
-  requestAnimationFrame(render);
+}
+
+function makeImg () {
+  var img = document.createElement('img');
+  img.src = '/waggle-stack.gif';
+  gifContainer.appendChild(img)
+  return img;
+}
+
+function translateElement (element, x, y) {
+  element.style.webkitTransform = 'translate(' + x + 'px,' + y + 'px)';
 }
 
 render();

@@ -12,11 +12,21 @@
     left: 0;
     top: 0;
   }
+  .gifs {
+    position: relative;
+  }
+  .gifs > img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+  }
   </style>
 </head>
 <body>
   <h1>meat</h1>
   <div class="container">
+    <div class="gifs"></div>
     <canvas id="a" width="300" height="225"></canvas>
     <canvas id="b" width="300" height="225"></canvas>
   </div>
