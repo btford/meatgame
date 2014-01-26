@@ -43,7 +43,7 @@ function render () {
 }
 
 function renderPlayers() {
-    if (dirty) {
+  if (dirty) {
     dirty = false;
     playerCanvas.width = playerCanvas.width;
     var players = Object.keys(data.players).forEach(function (id) {
