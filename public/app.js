@@ -12,6 +12,7 @@ window.requestAnimFrame = (function(){
 var socket = io.connect();
 var dirtyPlayers = false;
 var data = {players: {}};
+var videoShooter;
 var gifElements  = {};
 var gifContainer = document.querySelector('.gifs');
 var backgroundCanvas = window['background-canvas'];
@@ -65,6 +66,7 @@ function setPath (path, value, obj) {
 }
 
 function render () {
+  captureGamepad(socket);
   renderPlayers();
   // for canvases
   //a.width = a.width;
@@ -109,6 +111,31 @@ function makeImg (id) {
 
 function translateElement (element, x, y) {
   element.style.webkitTransform = 'translate(' + x + 'px,' + y + 'px)';
+}
+
+function captureGamepad(socket) {
+  var pad;
+  if (navigator.webkitGetGamepads == null) { return; }
+  pad = navigator.webkitGetGamepads()[0];
+  if (pad != null) {
+    if (pad.buttons[6] === 1 || pad.buttons[0] === 1) {
+        getScreenshot(function (picture) {
+          socket.emit('enter', picture);
+        });
+    }
+    if (pad.buttons[12] === 1 || pad.axes[1] < -0.6) {
+      socket.emit('up');
+    }
+    if (pad.buttons[13] === 1 || pad.axes[1] > 0.6) {
+      socket.emit('down');
+    }
+    if (pad.buttons[14] === 1 || pad.axes[0] < -0.6) {
+      socket.emit('left');
+    }
+    if (pad.buttons[15] === 1 || pad.axes[0] > 0.6) {
+      socket.emit('right');
+    }
+  }
 }
 
 render();
