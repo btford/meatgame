@@ -2,6 +2,8 @@
   "name": "meatgame",
   "version": "0.0.0",
   "dependencies": {
-     "fingerprint": "0.5.0"
+     "fingerprint": "0.5.0",
+     "animated-gif": "sole/Animated_GIF",
+     "gumhelper": "sole/gumhelper"
   }
 }
