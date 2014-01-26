@@ -1,0 +1,7 @@
+{
+  "name": "meatgame",
+  "version": "0.0.0",
+  "dependencies": {
+     "fingerprint": "0.5.0"
+  }
+}
