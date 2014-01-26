@@ -1,3 +1,7 @@
-canvas {
-  background: #c0ffee;
+#player-canvas {
+  z-index: 1;
+}
+
+#background-canvas {
+  z-index: 0;
 }

@@ -12,11 +12,15 @@ window.requestAnimFrame = (function(){
 var socket = io.connect();
 var dirty = false;
 var data = {players: {}};
+var playerCanvas = window['player-canvas'];
+var backgroundCanvas = window['background-canvas'];
 
 window.socket = socket;
 
-var context = a.getContext('2d');
+var context = playerCanvas.getContext('2d');
 context.fillStyle = '#333';
+
+var backgroundContext = backgroundCanvas.getContext('2d');
 
 socket.on('message', function (newData) {
   dirty = true;
@@ -35,9 +39,13 @@ function setPath (path, value, obj) {
 }
 
 function render () {
-  if (dirty) {
+  renderPlayers();
+}
+
+function renderPlayers() {
+    if (dirty) {
     dirty = false;
-    a.width = a.width;
+    playerCanvas.width = playerCanvas.width;
     var players = Object.keys(data.players).forEach(function (id) {
       var player = data.players[id];
       context.fillRect(player.x, player.y, 50, 50);
@@ -45,5 +53,14 @@ function render () {
   }
   requestAnimationFrame(render);
 }
+
+var img_map = new Image();
+img_map.src = ('/images/bee_person.jpg');
+
+img_map.onload = function paintBackgroundCanvas() {
+  backgroundCanvas.width = img_map.width;
+  backgroundCanvas.height = img_map.height;
+  backgroundContext.drawImage(img_map, 0, 0)
+};
 
 render();

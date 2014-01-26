@@ -2,10 +2,12 @@
 <html>
 <head>
   <title>meat</title>
-  <link rel="stylesheet" href="/main.css">
   <style>
   .container {
     position: relative;
+    overflow: hidden;
+    width: 500px;
+    height: 300px;
   }
   .container > * {
     position: absolute;
@@ -13,12 +15,13 @@
     top: 0;
   }
   </style>
+  <link rel="stylesheet" href="/main.css">
 </head>
 <body>
   <h1>meat</h1>
   <div class="container">
-    <canvas id="a" width="300" height="225"></canvas>
-    <canvas id="b" width="300" height="225"></canvas>
+    <canvas id="player-canvas" width="300" height="225"></canvas>
+    <canvas id="background-canvas"></canvas>
   </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/keys.js"></script>
