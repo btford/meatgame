@@ -1,3 +1,9 @@
 canvas {
   background: #c0ffee;
 }
+
+video {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
