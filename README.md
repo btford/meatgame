@@ -1,5 +1,13 @@
 # Meatgame
 
+## Contributing
+ * Make sure you're using node >= 0.11 as this is using ES6 goodness, [nvm](https://github.com/creationix/nvm) is your friend there.
+
+```
+npm install
+bower install
+npm start
+```
 
 ## Todo
 
