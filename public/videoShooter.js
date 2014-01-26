@@ -13,7 +13,7 @@
       interval = interval !== undefined ? interval : 0.1; // In seconds
 
       var pendingFrames = numFrames;
-      var ag = new Animated_GIF({workerPath: '/lib/Animated_GIF.worker.min.js'});
+      var ag = new Animated_GIF({workerPath: '/lib/animated-gif/dist/Animated_GIF.worker.min.js'});
       ag.setSize(canvas.width, canvas.height);
       ag.setDelay(interval);
 
