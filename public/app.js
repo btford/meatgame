@@ -79,7 +79,7 @@ function renderPlayers () {
 
       // if a player has been added since last render, we need to add a new img element
       if (!gifElements[id]) {
-        gifElements[id] = makeImg();
+        gifElements[id] = makeImg(id);
       }
       if (data.players[id].picture && gifElements[id].src !== data.players[id].picture) {
         gifElements[id].src = data.players[id].picture;
@@ -87,13 +87,22 @@ function renderPlayers () {
 
       translateElement(gifElements[id], data.players[id].x, data.players[id].y);
     });
-    // remove old images ?
+
+    // remove old images.
+    imgs = gifContainer.childNodes;
+    for (var i = 0; i < imgs.length; i++) {
+      // For some reason deleted players wind up as empty objects?
+      if (Object.keys(data.players[imgs[i].id]).length === 0) {
+        imgs[i].parentNode.removeChild(imgs[i]);
+      }
+    }
 
   }
 }
 
-function makeImg () {
+function makeImg (id) {
   var img = document.createElement('img');
+  img.setAttribute('id', id)
   gifContainer.appendChild(img)
   return img;
 }

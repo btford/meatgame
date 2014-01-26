@@ -94,7 +94,7 @@ var createModel = module.exports = function (obj) {
         return key[0] !== '_';
       }).
       map(function (key) {
-        if (typeof obj[key] === 'object' && obj[key] !== null) {
+        if (typeof obj[key] === 'object' && obj[key] != undefined) {
           if (!obj[key].diff) {
             console.log(key, obj)
           }
