@@ -7,7 +7,8 @@ var keysWeCareAbout = {
   '37': 'left',
   '38': 'up',
   '39': 'right',
-  '40': 'down'
+  '40': 'down',
+  '13': 'enter'
 };
 
 var keyState = window.keyState = {};
@@ -15,7 +16,17 @@ var keyState = window.keyState = {};
 window.addEventListener('keydown', function (ev) {
   var name = keysWeCareAbout[ev.keyCode.toString()];
   if (name) {
-    window.socket.emit(name);
+    switch(name) {
+      case 'enter':
+        getScreenshot(function (picture) {
+          window.socket.emit(name, picture);
+        });
+        break;
+
+      default:
+        window.socket.emit(name);
+        break;
+    }
     keyState[name] = true;
   }
 });

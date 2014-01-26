@@ -1,7 +1,10 @@
-#player-canvas {
-  z-index: 1;
+#background-canvas {
+  position: absolute;
+  z-index: 0;
 }
 
-#background-canvas {
-  z-index: 0;
+video {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
 }

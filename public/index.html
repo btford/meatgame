@@ -3,27 +3,38 @@
 <head>
   <title>meat</title>
   <style>
-  .container {
+  #map_container {
     position: relative;
     overflow: hidden;
-    width: 500px;
-    height: 300px;
+    width: 1200px;
+    height: 500px;
   }
   .container > * {
     position: absolute;
     left: 0;
     top: 0;
   }
+  .gifs {
+    position: relative;
+  }
+  .gifs > img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+  }
   </style>
   <link rel="stylesheet" href="/main.css">
 </head>
 <body>
   <h1>meat</h1>
-  <div class="container">
-    <canvas id="player-canvas" width="300" height="225"></canvas>
+  <div id="map_container" class="gifs">
     <canvas id="background-canvas"></canvas>
   </div>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/lib/Animated_GIF.min.js"></script>
+  <script src="/lib/gumhelper.js"></script>
+  <script src="/lib/videoShooter.js"></script>
   <script src="/keys.js"></script>
   <script src="/app.js"></script>
 </body>
