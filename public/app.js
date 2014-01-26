@@ -94,7 +94,8 @@ function renderPlayers () {
     imgs = gifContainer.childNodes;
     for (var i = 0; i < imgs.length; i++) {
       // For some reason deleted players wind up as empty objects?
-      if (Object.keys(data.players[imgs[i].id]).length === 0) {
+      var obj = data.players[imgs[i].id];
+      if (obj && Object.keys(obj).length === 0) {
         imgs[i].parentNode.removeChild(imgs[i]);
       }
     }
