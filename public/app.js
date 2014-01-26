@@ -13,6 +13,18 @@ var socket = io.connect();
 var dirtyPlayers = false;
 var data = {players: {}};
 var videoShooter;
+var gifElements  = {};
+var gifContainer = document.querySelector('.gifs');
+var backgroundCanvas = window['background-canvas'];
+var backgroundContext = backgroundCanvas.getContext('2d');
+
+var img_map = new Image();
+img_map.src = ('/images/bee_person.jpg');
+img_map.onload = function paintBackgroundCanvas() {
+  backgroundCanvas.width = img_map.width;
+  backgroundCanvas.height = img_map.height;
+  backgroundContext.drawImage(img_map, 0, 0)
+};
 
 var getScreenshot = function (callback, numFrames, interval, progressCallback) {
   if (videoShooter) {
@@ -36,9 +48,6 @@ gumHelper.startVideoStreaming(function callback(err, stream, videoElement) {
 });
 
 window.socket = socket;
-
-var context = a.getContext('2d');
-context.fillStyle = '#333';
 
 socket.on('message', function (newData) {
   dirtyPlayers = true;
@@ -64,9 +73,6 @@ function render () {
   requestAnimationFrame(render);
 }
 
-var gifContainer = document.querySelector('.gifs');
-var gifElements  = {};
-
 function renderPlayers () {
   if (dirtyPlayers) {
     dirtyPlayers = false;
@@ -75,7 +81,7 @@ function renderPlayers () {
 
       // if a player has been added since last render, we need to add a new img element
       if (!gifElements[id]) {
-        gifElements[id] = makeImg();
+        gifElements[id] = makeImg(id);
       }
       if (data.players[id].picture && gifElements[id].src !== data.players[id].picture) {
         gifElements[id].src = data.players[id].picture;
@@ -83,13 +89,22 @@ function renderPlayers () {
 
       translateElement(gifElements[id], data.players[id].x, data.players[id].y);
     });
-    // remove old images ?
+
+    // remove old images.
+    imgs = gifContainer.childNodes;
+    for (var i = 0; i < imgs.length; i++) {
+      // For some reason deleted players wind up as empty objects?
+      if (Object.keys(data.players[imgs[i].id]).length === 0) {
+        imgs[i].parentNode.removeChild(imgs[i]);
+      }
+    }
 
   }
 }
 
-function makeImg () {
+function makeImg (id) {
   var img = document.createElement('img');
+  img.setAttribute('id', id)
   gifContainer.appendChild(img)
   return img;
 }

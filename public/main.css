@@ -1,3 +1,10 @@
-canvas {
-  background: #c0ffee;
+#background-canvas {
+  position: absolute;
+  z-index: 0;
+}
+
+video {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
 }
