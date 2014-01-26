@@ -3,10 +3,23 @@
 <head>
   <title>meat</title>
   <link rel="stylesheet" href="/main.css">
+  <style>
+  .container {
+    position: relative;
+  }
+  .container > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  </style>
 </head>
 <body>
   <h1>meat</h1>
-  <canvas id="a" width="300" height="225"></canvas>
+  <div class="container">
+    <canvas id="a" width="300" height="225"></canvas>
+    <canvas id="b" width="300" height="225"></canvas>
+  </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/keys.js"></script>
   <script src="/app.js"></script>
