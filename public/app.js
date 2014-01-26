@@ -12,6 +12,18 @@ window.requestAnimFrame = (function(){
 var socket = io.connect();
 var dirtyPlayers = false;
 var data = {players: {}};
+var gifElements  = {};
+var gifContainer = document.querySelector('.gifs');
+var backgroundCanvas = window['background-canvas'];
+var backgroundContext = backgroundCanvas.getContext('2d');
+
+var img_map = new Image();
+img_map.src = ('/images/bee_person.jpg');
+img_map.onload = function paintBackgroundCanvas() {
+  backgroundCanvas.width = img_map.width;
+  backgroundCanvas.height = img_map.height;
+  backgroundContext.drawImage(img_map, 0, 0)
+};
 
 var getScreenshot = function (callback, numFrames, interval, progressCallback) {
   if (videoShooter) {
@@ -36,9 +48,6 @@ gumHelper.startVideoStreaming(function callback(err, stream, videoElement) {
 
 window.socket = socket;
 
-var context = a.getContext('2d');
-context.fillStyle = '#333';
-
 socket.on('message', function (newData) {
   dirtyPlayers = true;
   newData.forEach(function (datum) {
@@ -61,9 +70,6 @@ function render () {
   //a.width = a.width;
   requestAnimationFrame(render);
 }
-
-var gifContainer = document.querySelector('.gifs');
-var gifElements  = {};
 
 function renderPlayers () {
   if (dirtyPlayers) {

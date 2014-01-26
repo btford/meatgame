@@ -2,10 +2,12 @@
 <html>
 <head>
   <title>meat</title>
-  <link rel="stylesheet" href="/main.css">
   <style>
-  .container {
+  #map_container {
     position: relative;
+    overflow: hidden;
+    width: 1200px;
+    height: 500px;
   }
   .container > * {
     position: absolute;
@@ -22,13 +24,12 @@
     z-index: 100;
   }
   </style>
+  <link rel="stylesheet" href="/main.css">
 </head>
 <body>
   <h1>meat</h1>
-  <div class="container">
-    <div class="gifs"></div>
-    <canvas id="a" width="300" height="225"></canvas>
-    <canvas id="b" width="300" height="225"></canvas>
+  <div id="map_container" class="gifs">
+    <canvas id="background-canvas"></canvas>
   </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/lib/Animated_GIF.min.js"></script>
